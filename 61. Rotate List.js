@@ -6,30 +6,33 @@ class ListNode {
 }
 
 var rotateRight = function (head, k) {
-  if (!head || k == 0) return head;
-  let arr = [];
-  let check = head
-  while (check != null) {
-    arr.push(check.val);
-    check = check.next;
-  }
-  let len = arr.length;
-  if (len == 0 || len == 1 || k == 0) return head;
-  k = k % len;
-  arr = [...arr.slice(len - k, len), ...arr.slice(0, len - k)];
+  if (!head) return null;
 
-  let ans = new ListNode(arr[0]);
-  let cur = ans;
-  for (let i = 1; i < len; i++) {
-    cur.next = new ListNode(arr[i]);
-    cur = cur.next;
+  let length = 1;
+  let tail = head;
+  while (tail.next) {
+    tail = tail.next;
+    length++;
   }
-  return ans;
+  k = k % length;
+
+  if (k === 0) return head;
+  tail.next = head;
+
+  let stepsToNewHead = length - k;
+  let newTail = head;
+  for (let i = 1; i < stepsToNewHead; i++) {
+    newTail = newTail.next;
+  }
+  const newHead = newTail.next;
+  newTail.next = null;
+  return newHead;
 };
 
-let head = new ListNode(
+const head = new ListNode(
   1,
-  new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, null))))
+  new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, null)))),
 );
-let k = 2;
+const k = 2;
+
 console.log(rotateRight(head, k));
