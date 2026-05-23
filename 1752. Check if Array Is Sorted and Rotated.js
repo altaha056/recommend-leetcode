@@ -1,15 +1,14 @@
 var check = function (nums) {
-  let isRotate = null;
+  let count = 0;
+  let n = nums.length - 1;
   for (let i = 1; i < nums.length; i++) {
     if (nums[i] < nums[i - 1]) {
-      if (isRotate != null) return false;
-      isRotate = i;
+      count++
+      if (nums[n] > nums[0]) return false;
     }
+    if(count>1)return false
   }
-  if (isRotate == null) return true;
-  if (nums[isRotate] > nums[0] || nums[nums.length - 1] > nums[0]) return false;
   return true;
 };
-const nums = [3, 4, 5, 1, 2];
-
+const nums = [2, 7, 4, 1, 2, 6, 2];
 console.log(check(nums));
